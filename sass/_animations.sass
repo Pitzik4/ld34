@@ -8,6 +8,13 @@
   animation: $args
   -webkit-animation: $args
 
+=css-transition($args...)
+  transition: $args
+  -webkit-transition: $args
+
+.flip
+  transform: scaleX(-1)
+
 
 =sprite($name, $image, $width, $height)
   .spr-#{$name}
@@ -37,6 +44,10 @@
   &.anim-#{$name}::before
     +css-animation(#{length($frames) / $fps}s step-end 0s $iterations normal both running $anim-name)
 
+=still-sheet-animation($name, $frame)
+  &.anim-#{$name}::before
+    left: $frame * -100%
+
 =shake-animation($name, $fps, $iterations, $pos, $frames...)
   $anim-name: an#{random(10000)}
   
@@ -51,10 +62,10 @@
             #{$pos}: 0
       @else
         $v: nth($current, 1)
-        $d: nth($current, 2)
-        $q: nth($current, 3)
+        $d: if(length($current) >= 2, nth($current, 2), 1)
+        $q: if(length($current) >= 3, nth($current, 3), 1)
         $s: $spacing * $d / $q
-        @for $j from 0 through $q - 1
+        @for $j from 0 to $q
           $force: $v * (1 - ($j / $q))
           #{$timing + $s * $j}
             #{$pos}: $force
@@ -67,3 +78,26 @@
   
   &.anim-#{$name}
     +css-animation(#{length($frames) / $fps}s step-end 0s $iterations normal both running $anim-name)
+
+=move-animation($name, $pos, $from, $to, $duration, $iterations)
+  $anim-name: an#{random(10000)}
+  +css-keyframes($anim-name)
+    from
+      #{$pos}: $from
+    to
+      #{$pos}: $to
+  
+  @if $name == implied
+    +css-animation($duration linear 0s $iterations normal both running $anim-name)
+  @else
+    &.anim-#{$name}
+      +css-animation($duration linear 0s $iterations normal both running $anim-name)
+
+=image($name, $image, $width, $height)
+  .spr-#{$name}
+    position: absolute
+    width: $width
+    height: $height
+    background-image: url('img/#{$image}')
+    background-repeat: repeat
+    @content

@@ -1,22 +1,34 @@
 export function wrap(div, parentDiv) {
-  let x, y, sprite, anim;
+  let x, y, color, opacity = 1, sprite, anim, flip = false;
   
   function align() {
-    div.setAttribute('style', 'left:'+x+'px;top:'+y+'px;');
+    if(typeof x === 'number') x += 'px';
+    if(typeof y === 'number') y += 'px';
+    let style = 'left:'+x+';bottom:'+y;
+    if(color) {
+      style += ';background-color:' + color;
+    }
+    if(opacity !== 1) {
+      style += ';opacity:' + opacity;
+    }
+    div.setAttribute('style', style);
   }
   
   const out = {
-    child(x, y) {
+    child(x, y, sprite, anim) {
       const d = document.createElement('div');
       div.appendChild(d);
       const out = wrap(d, div);
       out.x = x || 0;
       out.y = y || 0;
+      out.sprite = sprite;
+      out.anim = anim;
       return out;
     },
     remove() {
       parentDiv.removeChild(div);
-    }
+    },
+    div: div
   };
   Object.defineProperty(out, 'x', {
     get() {
@@ -33,6 +45,25 @@ export function wrap(div, parentDiv) {
     },
     set(v) {
       y = v;
+      align();
+    }
+  });
+  Object.defineProperty(out, 'color', {
+    configurable: true,
+    get() {
+      return color;
+    },
+    set(v) {
+      color = v;
+      align();
+    }
+  });
+  Object.defineProperty(out, 'opacity', {
+    get() {
+      return opacity;
+    },
+    set(v) {
+      opacity = v;
       align();
     }
   });
@@ -61,6 +92,19 @@ export function wrap(div, parentDiv) {
       anim = v;
       if(anim) {
         div.classList.add('anim-'+anim);
+      }
+    }
+  });
+  Object.defineProperty(out, 'flip', {
+    get() {
+      return flip;
+    },
+    set(v) {
+      if(v === flip) return;
+      if(flip = v) {
+        div.classList.add('flip');
+      } else {
+        div.classList.remove('flip');
       }
     }
   });
