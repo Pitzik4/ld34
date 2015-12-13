@@ -8,7 +8,14 @@ export function tree(world) {
   return world.child(-488, 464, 'tree');
 }
 
+export function character(world, x, y, sprite) {
+  const out = world.child(x, y, sprite);
+  out.transform = 'translateX(-50%)';
+  return out;
+}
+
 export function boy(world) {
-  const out = world.child(3230-3600, 473, 'boy');
+  const out = character(world, -320, 473, 'boy');
+  out.anim = 'sit';
   return out;
 }

@@ -1,15 +1,24 @@
 export function wrap(div, parentDiv) {
-  let x, y, color, opacity = 1, sprite, anim, flip = false;
+  let x, y, color, opacity = 1, transform, sprite, anim, flip = false;
   
   function align() {
-    if(typeof x === 'number') x += 'px';
-    if(typeof y === 'number') y += 'px';
-    let style = 'left:'+x+';bottom:'+y;
+    const xv = typeof x === 'number' && x !== 0 ? x + 'px' : x;
+    const yv = typeof y === 'number' && y !== 0 ? y + 'px' : y;
+    let style = '';
+    if(xv) {
+      style = 'left:'+xv;
+    }
+    if(yv) {
+      style += ';bottom:'+yv;
+    }
     if(color) {
       style += ';background-color:' + color;
     }
     if(opacity !== 1) {
       style += ';opacity:' + opacity;
+    }
+    if(transform) {
+      style += ';transform:' + transform;
     }
     div.setAttribute('style', style);
   }
@@ -64,6 +73,15 @@ export function wrap(div, parentDiv) {
     },
     set(v) {
       opacity = v;
+      align();
+    }
+  });
+  Object.defineProperty(out, 'transform', {
+    get() {
+      return transform;
+    },
+    set(v) {
+      transform = v;
       align();
     }
   });

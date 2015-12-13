@@ -36,8 +36,9 @@
   
   +css-keyframes($anim-name)
     @for $i from 1 through length($frames)
-      #{100% * ($i - 1) / length($frames)}
-        left: nth($frames, $i) * -100%
+      @if $i == 1 or nth($frames, $i) != nth($frames, $i - 1)
+        #{100% * ($i - 1) / length($frames)}
+          left: nth($frames, $i) * -100%
     to
       left: nth($frames, length($frames)) * -100%
   
@@ -79,7 +80,7 @@
   &.anim-#{$name}
     +css-animation(#{length($frames) / $fps}s step-end 0s $iterations normal both running $anim-name)
 
-=move-animation($name, $pos, $from, $to, $duration, $iterations)
+=move-animation($name, $pos, $from, $to, $duration, $iterations, $ease: linear)
   $anim-name: an#{random(10000)}
   +css-keyframes($anim-name)
     from
@@ -88,10 +89,10 @@
       #{$pos}: $to
   
   @if $name == implied
-    +css-animation($duration linear 0s $iterations normal both running $anim-name)
+    +css-animation($duration $ease 0s $iterations normal both running $anim-name)
   @else
     &.anim-#{$name}
-      +css-animation($duration linear 0s $iterations normal both running $anim-name)
+      +css-animation($duration $ease 0s $iterations normal both running $anim-name)
 
 =image($name, $image, $width, $height)
   .spr-#{$name}

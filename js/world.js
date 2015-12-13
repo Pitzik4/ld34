@@ -1,4 +1,5 @@
 import * as Objects from './objects.js';
+import { setImmediate } from './utils.js';
 
 export function height(x) {
   x /= 90;
@@ -24,6 +25,8 @@ export function create(game) {
   
   const overlay = game.child();
   overlay.sprite = 'overlay';
+  overlay.color = 'black';
+  window.setTimeout(() => overlay.opacity = 0, 1500);
   
   const boy = Objects.boy(world);
   
