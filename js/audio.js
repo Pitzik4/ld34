@@ -24,9 +24,12 @@ export function createSet(name, amt, volume) {
   for(let i = 0; i < amt; ++i) {
     set[i] = create(name+'-'+i, volume);
   }
+  let last = -1;
   return {
     play() {
-      set[(Math.random()*amt)|0].play();
+      let n;
+      while((n = (Math.random()*amt)|0) === last) {  }
+      set[last = n].play();
     }
   }
 }
@@ -34,5 +37,6 @@ export function createSet(name, amt, volume) {
 
 export const stepGrass = createSet('step-grass', 3, 0.75);
 export const stepWood = createSet('step-wood', 3, 0.75);
+export const stepSnow = createSet('step-snow', 5, 0.1);
 
 export const autumn = create('autumn', 1, true);

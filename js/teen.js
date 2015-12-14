@@ -1,17 +1,11 @@
 import * as Objects from './objects.js';
 import * as World from './world.js';
 import { reverse, stop, lookAt, theEnd } from './game.js';
-import * as Audio from './audio.js';
+import adult from './adult.js';
 
 
 export default function teen(game) {
-  const { ent: world, overlay, boy, main, triggers, tree, fadeOut, onStop, onReverse, remove: remove0, end } = World.create(game, 'teen', 'autumn');
-  game.color = '#ccc';
-  Audio.autumn.play();
-  function remove() {
-    remove0();
-    Audio.autumn.pause();
-  }
+  const { ent: world, overlay, boy, main, triggers, tree, fadeOut, onStop, onReverse, remove, end } = World.create(game, 'teen', 'autumn');
   end.x = 2900;
   //main.x = -2420; boy.x = main.x = 2400;
   main.y = World.platform(main.x);
@@ -56,14 +50,17 @@ export default function teen(game) {
           main.say("Four years.", 3000);
         }, time += 7000);
         window.setTimeout(() => {
-          boy.anim = 'stand';
+          boy.anim = 'look-up';
         }, time += 6000);
         window.setTimeout(() => {
           boy.say("Oh.", 3000);
-        }, time += 1500);
+        }, time += 2000);
+        window.setTimeout(() => {
+          boy.anim = 'stand-up';
+        }, time += 7000);
         window.setTimeout(() => {
           boy.say("Well, that's okay.", 3000);
-        }, time += 7000);
+        }, time += 2000);
         window.setTimeout(() => {
           boy.say("I'm just glad you're here now.", 3000);
         }, time += 6000);
@@ -395,8 +392,7 @@ export default function teen(game) {
     { x: 3850,
       func() {
         remove();
-        game.color = 'white';
-        //teen(game);
+        adult(game);
       }
     }
   );

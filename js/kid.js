@@ -6,7 +6,6 @@ import teen from './teen.js';
 
 export default function kid(game) {
   const { ent: world, overlay, boy, main, triggers, tree, fadeOut, onStop, onReverse, remove, end } = World.create(game, 'kid', 'summer');
-  game.color = 'skyblue';
   end.x = 2400;
   //main.x = -2420; boy.x = main.x = 2400;
   main.y = World.platform(main.x);
@@ -365,10 +364,10 @@ export default function kid(game) {
       }
     },
     { x: x += 200,
-      main: "Seeya!"
+      main: "So long!"
     },
     { x: x += 100,
-      boy: "Seeya."
+      boy: "So long."
     },
     { x: 3350,
       func() {

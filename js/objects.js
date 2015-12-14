@@ -2,7 +2,10 @@ import keys from './input.js';
 import * as World from './world.js';
 
 export function field(world, season) {
-  return world.child(-3600, 0, 'field');
+  return world.child(-3600, 0, season === 'winter' ? 'field-snowy' : 'field');
+}
+export function snowyPond(world) {
+  return world.child(400, 200, 'snowy-pond');
 }
 export function tree(world, season) {
   const out = world.child(-2488, 324, 'tree');
@@ -11,6 +14,9 @@ export function tree(world, season) {
   } else if(season === 'autumn') {
     out.anim = 'autumn';
   }
+}
+export function snow(world) {
+  return world.child(-3600, 0, 'snow');
 }
 export function end(world) {
   return world.child(2400, 230, 'end');
@@ -52,7 +58,7 @@ export function character(world, x, y, sprite, footstep1, footstep2) {
     out._update = update;
   };
   out.say = (text, time) => {
-    const dbox = world.child(out.x, out.y+(out.anim==='sit'?125:out.div.clientHeight));
+    const dbox = world.child(out.x, out.y+(out.anim==='sit'||out.anim==='look-up'?125:out.div.clientHeight));
     const dialogue = dbox.child(0, 0, 'dialogue');
     dialogue.div.innerHTML = text.replace(/'/g, '&rsquo;');
     window.setTimeout(() => {

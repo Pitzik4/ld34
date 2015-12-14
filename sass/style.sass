@@ -69,6 +69,10 @@ div
 
 +image(field, 'field.svg', 7200px, 500px)
   z-index: 10
++image(field-snowy, 'field-snowy.svg', 7200px, 500px)
+  z-index: 10
++image(snowy-pond, 'field-snowy-pond.svg', 1000px, 300px)
+  z-index: 20
 +sprite(tree, 'tree.svg', 350px, 335px)
   z-index: -10
   +still-sheet-animation(bare, 1)
@@ -78,6 +82,8 @@ div
   z-index: -1
   +still-sheet-animation(sit, 13)
   +sheet-animation(stand, 5, 1, 13, 14, 15, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 17, 0)
+  +sheet-animation(look-up, 5, 1, 13, 14, 15, 16)
+  +sheet-animation(stand-up, 5, 1, 16, 17, 0)
   +sheet-animation(sad, 6, 1, 0, 18, 19, 20)
   +sheet-animation(stressed, 10, 1, 0, 18, 19, 21, 22)
   +still-sheet-animation(stressed-full, 22)
@@ -94,7 +100,37 @@ div
   +sheet-animation(sad, 8, 1, 0, 13, 14, 15, 16)
   +sheet-animation(solemn, 8, 1, 0, 17, 18, 19)
 
++sprite(adult, 'adult.svg', 100px, 180px)
+ +sheet-animation(solemn, 8, 1, 0, 13, 14, 15)
+
 +sheet-animation(walk, 8, infinite, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4, 5)
+
++css-keyframes(snowfall)
+  from
+    background-position: 0 0
+  to
+    background-position: 0 700px
++css-keyframes(snowfall2)
+  from
+    background-position: 0 0
+  to
+    background-position: 1200px 3500px
+.spr-snow
+  transform: rotate(15deg)
+  z-index: 15
+  &::before, &::after
+    content: ''
+    position: absolute
+    left: 0
+    bottom: 0
+    width: 12000px
+    height: 7000px
+    background-image: url('img/snow.png')
+    background-repeat: repeat
+  &::before
+    +css-animation(10s linear 0s infinite normal both running snowfall)
+  &::after
+    +css-animation(50s linear 0s infinite normal both running snowfall2)
 
 +gradient-sprite(end, white, 640px, 420px, 800px)
   z-index: 20

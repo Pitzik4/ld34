@@ -18,6 +18,15 @@ export function platform(x) {
 
 function nop() {  }
 export function create(game, age, season) {
+  if(season === 'summer') {
+    game.color = 'skyblue';
+  } else if(season === 'autumn') {
+    game.color = '#ccc';
+    Audio.autumn.play();
+  } else if(season === 'winter') {
+    game.color = '#ddd';
+  }
+  
   const wrapper = game.child();
   wrapper.x = wrapper.y = '50%';
   
@@ -26,6 +35,8 @@ export function create(game, age, season) {
   const tree = Objects.tree(world, season);
   const field = Objects.field(world, season);
   const end = Objects.end(world);
+  const snow = season === 'winter' ? Objects.snow(world) : undefined;
+  const pond = season === 'winter' ? Objects.snowyPond(world) : undefined;
   
   const overlay = game.child();
   overlay.sprite = 'overlay';
@@ -33,6 +44,9 @@ export function create(game, age, season) {
   window.setTimeout(() => overlay.opacity = 0, 2000); // FOR-RELEASE make longer
   
   let footstep1 = Audio.stepGrass, footstep2 = Audio.stepWood;
+  if(season === 'winter') {
+    footstep1 = footstep2 = Audio.stepSnow;
+  }
   const main = Objects.main(world, age, footstep1, footstep2);
   const boy = Objects.boy(world, main, footstep1, footstep2);
   
@@ -95,6 +109,9 @@ export function create(game, age, season) {
     remove() {
       wrapper.remove();
       overlay.remove();
+      if(season === 'autumn') {
+        Audio.autumn.pause();
+      }
     },
     fadeOut(cb, color) {
       if(color) {
