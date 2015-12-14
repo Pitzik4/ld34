@@ -1,4 +1,5 @@
 import * as Objects from './objects.js';
+import * as Audio from './audio.js';
 
 export function height(x) {
   x /= 90;
@@ -16,23 +17,24 @@ export function platform(x) {
 }
 
 function nop() {  }
-export function create(game, age) {
+export function create(game, age, season) {
   const wrapper = game.child();
   wrapper.x = wrapper.y = '50%';
   
   const world = wrapper.child();
   
-  const tree = Objects.tree(world);
-  const field = Objects.field(world);
+  const tree = Objects.tree(world, season);
+  const field = Objects.field(world, season);
   const end = Objects.end(world);
   
   const overlay = game.child();
   overlay.sprite = 'overlay';
   overlay.color = 'black';
-  window.setTimeout(() => overlay.opacity = 0, 1500); // FOR-RELEASE make this longer
+  window.setTimeout(() => overlay.opacity = 0, 2000); // FOR-RELEASE make longer
   
-  const main = Objects.main(world, age);
-  const boy = Objects.boy(world, main);
+  let footstep1 = Audio.stepGrass, footstep2 = Audio.stepWood;
+  const main = Objects.main(world, age, footstep1, footstep2);
+  const boy = Objects.boy(world, main, footstep1, footstep2);
   
   const triggers = [];
   
@@ -103,7 +105,7 @@ export function create(game, age) {
       }
       overlay.opacity = 1;
       if(cb) {
-        window.setTimeout(cb, 5000);
+        window.setTimeout(cb, 20000);
       }
     },
     overlay: overlay,
@@ -112,6 +114,7 @@ export function create(game, age) {
     main: main,
     triggers: triggers,
     tree: tree,
+    end: end,
     onStop(func) {
       onstop = func;
     },
