@@ -104,3 +104,22 @@
     background-image: url('img/#{$image}')
     background-repeat: repeat
     @content
+
+=gradient-sprite($name, $color, $width, $height, $further: 0)
+  .spr-#{$name}
+    $from: change_color($color, $alpha: 0)
+    background: -webkit-linear-gradient(left, $from 0%,$color 100%)
+    background: linear-gradient(to right, $from 0%,$color 100%)
+    position: absolute
+    width: $width
+    height: $height
+    @if $further > 0
+      &::before
+        content: ''
+        position: absolute
+        width: $further
+        height: $height
+        top: 0
+        left: 99.5%
+        background-color: white
+    @content

@@ -24,11 +24,12 @@ export function create(game, age) {
   
   const tree = Objects.tree(world);
   const field = Objects.field(world);
+  const end = Objects.end(world);
   
   const overlay = game.child();
   overlay.sprite = 'overlay';
   overlay.color = 'black';
-  window.setTimeout(() => overlay.opacity = 0, 1500);
+  window.setTimeout(() => overlay.opacity = 0, 1500); // FOR-RELEASE make this longer
   
   const main = Objects.main(world, age);
   const boy = Objects.boy(world, main);

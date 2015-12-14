@@ -5,7 +5,10 @@ export function field(world) {
   return world.child(-3600, 0, 'field');
 }
 export function tree(world) {
-  return world.child(-488, 464, 'tree');
+  return world.child(-2488, 324, 'tree');
+}
+export function end(world) {
+  return world.child(2400, 242, 'end');
 }
 
 export function character(world, x, y, sprite) {
@@ -13,7 +16,7 @@ export function character(world, x, y, sprite) {
   out.offsX = 50;
   const update = out._update = (dt) => {
     const dir = out._direction();
-    if(dir === 0 || (dir < 0 && out.x < -1000)) {
+    if(dir === 0 || (dir < 0 && out.x < -3000)) {
       out.anim = null;
     } else {
       const slope = World.slope(out.x);
@@ -35,19 +38,19 @@ export function character(world, x, y, sprite) {
   out.say = (text, time) => {
     const dbox = world.child(out.x, out.y+out.div.clientHeight);
     const dialogue = dbox.child(0, 0, 'dialogue');
-    dialogue.div.innerHTML = text;
+    dialogue.div.innerHTML = text.replace(/'/g, '&rsquo;');
     window.setTimeout(() => {
       dialogue.anim = 'out';
       window.setTimeout(() => {
         dbox.remove();
       }, 2000);
-    }, time || 4000);
+    }, time || 3000);
   };
   return out;
 }
 
 export function boy(world, main) {
-  const out = character(world, -320, 473, 'boy');
+  const out = character(world, -2320, 333, 'boy');
   out.cutscene();
   out.anim = 'sit';
   out.goingBack = false;
@@ -61,7 +64,7 @@ export function boy(world, main) {
 }
 
 export function main(world, sprite) {
-  const out = character(world, -1000, World.platform(-1000), sprite);
+  const out = character(world, -3000, World.platform(-3000), sprite);
   out._direction = () => (keys.right||keys.d) - (keys.left||keys.a);
   out.flip = true;
   return out;

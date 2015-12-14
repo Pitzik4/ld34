@@ -33,17 +33,26 @@ function stop(boy, text1, text2) {
   };
 }
 
+function lookAt(boy, main) {
+  return () => {
+    boy.flip = main.x > boy.x;
+  };
+}
+
 export default function kid(game) {
-  const { ent: world, overlay, boy, main, triggers, tree, fadeOut, onStop, onReverse } = World.create(game, 'kid');
+  const { ent: world, overlay, boy, main, triggers, tree, fadeOut, onStop, onReverse, remove } = World.create(game, 'kid');
   game.color = 'skyblue';
-  main.x = -420; main.y = World.platform(main.x);
+  //main.x = -2420; boy.x = main.x = 2400; // FOR-RELEASE remove this
+  main.y = World.platform(main.x);
+  let x = -2400;
   triggers.push(
     {
-      x: -410,
+      x: x - 10,
       func() {
         main.cutscene();
         main.anim = null;
-        let time = 0;
+        let time = -3000;
+        time = 0;
         window.setTimeout(() => {
           boy.anim = 'stand';
         }, time += 2500);
@@ -205,13 +214,144 @@ export default function kid(game) {
         }, time += 4000);
       }
     },
-    { x: -400,
+    { x: x,
       func() {
         onStop(stop(boy));
       }
     },
-    { x: -100,
-      
+    { x: x += 200,
+      main: "We've only got one life between us now, huh?"
+    },
+    { x: x += 200,
+      main: "Better make it count."
+    },
+    { x: x += 200,
+      boy: "Don't worry. I've got plans. Big ones."
+    },
+    { x: x += 200,
+      main: "Nothing I can't handle! Your wish is my command."
+    },
+    { x: x += 200,
+      boy: "You know that comic we were writing together?"
+    },
+    { x: x += 200,
+      main: "Dingbat Fred?"
+    },
+    { x: x += 200,
+      boy: "I always wanted to make it into a real comic book."
+    },
+    { x: x += 200,
+      main: "Hey, I was planning on doing that anyway!"
+    },
+    { x: x += 200,
+      main: "Heh. If all our plans are the same, this will be easy!"
+    },
+    { x: x += 200,
+      boy: "I mean a <em>real</em> comic book!"
+    },
+    { x: x += 200,
+      boy: "With a movie! And millions of nerds arguing over whether it's canon!"
+    },
+    { x: x += 200,
+      main: "Well, yeah! Duh!"
+    },
+    { x: x += 200,
+      boy: "Ha! Seriously, though..."
+    },
+    { x: x += 200,
+      boy: "You really think you can make it happen?"
+    },
+    { x: x += 200,
+      main: "I <em>know</em> I can. What else?"
+    },
+    { x: x += 200,
+      boy: "Okay, well, comics are one thing..."
+    },
+    { x: x += 200,
+      boy: "But for my day job, I wanted to be a scientist!"
+    },
+    { x: x += 200,
+      boy: "Quantum physics is <em>awesome!</em>"
+    },
+    { x: x += 200,
+      main: "Oh, yeah! I love quantum physics!"
+    },
+    { x: x += 200,
+      boy: "You have to discover something revolutionary for me!"
+    },
+    { x: x += 200,
+      boy: "I think the world's due for another Einstein, don't you?"
+    },
+    { x: x += 200,
+      main: "No problem! I can't wait!"
+    },
+    { x: x += 200,
+      main: "So, that's it for now? We can talk again later."
+    },
+    { x: x += 200,
+      boy: "Time to go?"
+    },
+    { x: x += 200,
+      func() {
+        onStop(); onReverse();
+        main.cutscene();
+        boy.cutscene(lookAt(boy, main));
+        main.anim = boy.anim = null;
+        main.flip = true;
+        let time = 0;
+        window.setTimeout(() => {
+          main.say("Yeah. Don't worry, I'll be back.", 3000);
+        }, time += 2000);
+        window.setTimeout(() => {
+          boy.anim = 'sad';
+          boy.say("But you just got here...", 4000);
+        }, time += 6000);
+        window.setTimeout(() => {
+          boy.say("I wish you didn't have to leave. I'm so alone here.", 4000);
+        }, time += 7000);
+        window.setTimeout(() => {
+          main.say("Well, I don't <em>have</em> to leave.", 3000);
+        }, time += 7000);
+        window.setTimeout(() => {
+          boy.reverse();
+        }, time + 4000);
+        window.setTimeout(() => {
+          main.say("But if I don't leave now...", 3000);
+        }, time += 6000);
+        window.setTimeout(() => {
+          main.say("I'll never be able to.", 3000);
+        }, time += 6000);
+        window.setTimeout(() => {
+          main.anim = 'persuasive';
+          main.say("And how can I make our dreams come true if I'm stuck here?", 4000);
+        }, time += 6000);
+        window.setTimeout(() => {
+          main.reverse();
+          boy.say("Okay.", 4000);
+        }, time += 7000);
+        window.setTimeout(() => {
+          boy.say("Have fun living. Heh.", 3000);
+        }, time += 7000);
+        window.setTimeout(() => {
+          boy.say("Come back soon.", 3000);
+        }, time += 7000);
+        window.setTimeout(() => {
+          main.say("I will.", 3000);
+          main.control();
+        }, time += 6000);
+      }
+    },
+    { x: x += 200,
+      main: "Seeya!"
+    },
+    { x: x += 100,
+      boy: "Seeya."
+    },
+    { x: 3350,
+      func() {
+        remove();
+        kid(game);
+      }
     }
   );
 }
