@@ -5,6 +5,7 @@ var npm = require('rollup-plugin-npm');
 var cjs = require('rollup-plugin-commonjs');
 var babel = require('gulp-babel');
 var sass = require('gulp-sass');
+var imagemin = require('gulp-imagemin');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 
@@ -35,15 +36,19 @@ gulp.task('sass', function() {
 });
 
 gulp.task('assets', function() {
-  return gulp.src('./assets/**/*')
+  return gulp.src(['./assets/**/*', '!./assets/img/*'])
   .pipe(gulp.dest('./dist'));
+});
+gulp.task('images', function() {
+  return gulp.src('./assets/img/*')
+  .pipe(imagemin())
+  .pipe(gulp.dest('./dist/img'));
 });
 
 
 gulp.task('watch', function() {
   gulp.watch('./js/**/*', ['js']);
   gulp.watch('./sass/**/*', ['sass']);
-  gulp.watch('./assets/**/*', ['assets']);
 });
 
-gulp.task('default', ['assets', 'sass', 'js']);
+gulp.task('default', ['assets', 'images', 'sass', 'js']);
