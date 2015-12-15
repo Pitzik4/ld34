@@ -43,5 +43,6 @@ export function theEnd(remove, game) {
   return () => {
     remove();
     game.color = 'black';
+    Objects.theEnd(game);
   };
 }

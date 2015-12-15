@@ -18,30 +18,43 @@ export function platform(x) {
 
 function nop() {  }
 export function create(game, age, season) {
-  if(season === 'summer') {
-    game.color = 'skyblue';
-  } else if(season === 'autumn') {
-    game.color = '#ccc';
-    Audio.autumn.play();
-  } else if(season === 'winter') {
-    game.color = '#ddd';
-  }
-  
   const wrapper = game.child();
   wrapper.x = wrapper.y = '50%';
   
   const world = wrapper.child();
   
+  let ambience;
+  if(season === 'summer') {
+    game.color = 'skyblue';
+  } else if(season === 'autumn') {
+    game.color = '#ccc';
+    ambience = Audio.autumn;
+    ambience.play();
+  } else if(season === 'winter') {
+    game.color = '#ddd';
+  } else if(season === 'spring') {
+    game.color = '#222';
+    ambience = Audio.rain;
+    ambience.play();
+    world.div.classList.add('downpour');
+  } else if(season === 'night') {
+    game.color = '#030303';
+    ambience = Audio.night;
+    ambience.play();
+    world.div.classList.add('night');
+    wrapper.div.classList.add('wrapper-night');
+  }
+  
   const tree = Objects.tree(world, season);
   const field = Objects.field(world, season);
   const end = Objects.end(world);
-  const snow = season === 'winter' ? Objects.snow(world) : undefined;
+  const snow = season === 'winter' || season === 'spring' ? Objects.downpour(world, season) : undefined;
   const pond = season === 'winter' ? Objects.snowyPond(world) : undefined;
   
   const overlay = game.child();
   overlay.sprite = 'overlay';
   overlay.color = 'black';
-  window.setTimeout(() => overlay.opacity = 0, 2000); // FOR-RELEASE make longer
+  window.setTimeout(() => overlay.opacity = 0, 2000);
   
   let footstep1 = Audio.stepGrass, footstep2 = Audio.stepWood;
   if(season === 'winter') {
@@ -54,7 +67,7 @@ export function create(game, age, season) {
   
   let onstop, onreverse;
   
-  let time, stopped, reversed;
+  let time, stopped, reversed, animationFrame;
   function update(dt) {
     if(time === undefined) {
       time = dt;
@@ -97,11 +110,13 @@ export function create(game, age, season) {
         }
       }
     }
-    world.x = -main.x;
-    world.y = -height(main.x)-100;
-    window.requestAnimationFrame(update);
+    if(!world.noFollow) {
+      world.x = -main.x;
+      world.y = -height(main.x)-100;
+    }
+    animationFrame = window.requestAnimationFrame(update);
   }
-  window.requestAnimationFrame(update);
+  animationFrame = window.requestAnimationFrame(update);
   
   return {
     ent: world,
@@ -109,9 +124,10 @@ export function create(game, age, season) {
     remove() {
       wrapper.remove();
       overlay.remove();
-      if(season === 'autumn') {
-        Audio.autumn.pause();
+      if(ambience) {
+        ambience.pause();
       }
+      window.cancelAnimationFrame(animationFrame);
     },
     fadeOut(cb, color) {
       if(color) {

@@ -66,9 +66,25 @@ div
   &.anim-out
     +css-animation(2s ease-out 0s 1 normal both running dialogue-out)
 
+.downpour
+  opacity: 0.8
+
+.wrapper-night::before
+  content: ''
+  background-image: url('img/stars.png')
+  background-repeat: repeat
+  background-size: 640px
+  position: absolute
+  width: 12000px
+  height: 7000px
+  left: -6000px
+  bottom: -3500px
+  z-index: -50
 
 +image(field, 'field.svg', 7200px, 500px)
   z-index: 10
+  .downpour &, .night &
+    background-image: url('img/field-silhouette.svg')
 +image(field-snowy, 'field-snowy.svg', 7200px, 500px)
   z-index: 10
 +image(snowy-pond, 'field-snowy-pond.svg', 1000px, 300px)
@@ -77,8 +93,11 @@ div
   z-index: -10
   +still-sheet-animation(bare, 1)
   +still-sheet-animation(autumn, 2)
+  +still-sheet-animation(silhouette, 3)
 
 +sprite(boy, 'boy.svg', 100px, 150px)
+  .downpour &::before, .night &::before
+    content: url('img/boy-silhouette.svg')
   z-index: -1
   +still-sheet-animation(sit, 13)
   +sheet-animation(stand, 5, 1, 13, 14, 15, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 17, 0)
@@ -100,10 +119,28 @@ div
   +sheet-animation(sad, 8, 1, 0, 13, 14, 15, 16)
   +sheet-animation(solemn, 8, 1, 0, 17, 18, 19)
 
-+sprite(adult, 'adult.svg', 100px, 180px)
- +sheet-animation(solemn, 8, 1, 0, 13, 14, 15)
++sprite(adult, 'adult.svg', 100px, 190px)
+  .downpour &::before, .night &::before
+    content: url('img/adult-silhouette.svg')
+  +sheet-animation(solemn, 8, 1, 0, 13, 14, 15)
 
 +sheet-animation(walk, 8, infinite, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4, 5)
+
++css-keyframes(the-end)
+  from
+    color: black
+  to
+    color: white
+.spr-the-end::before
+  content: 'End.'
+  width: 640px
+  position: absolute
+  left: 0
+  bottom: 50%
+  color: white
+  font-size: 32px
+  text-align: center
+  +css-animation(6s ease-out 3s 1 normal both running the-end)
 
 +css-keyframes(snowfall)
   from
@@ -131,6 +168,33 @@ div
     +css-animation(10s linear 0s infinite normal both running snowfall)
   &::after
     +css-animation(50s linear 0s infinite normal both running snowfall2)
+
++css-keyframes(torrent)
+  from
+    background-position: 0 0
+  to
+    background-position: 0 700px
++css-keyframes(torrent2)
+  from
+    background-position: 0 0
+  to
+    background-position: 1200px 3500px
+.spr-torrent
+  transform: rotate(40deg)
+  z-index: 15
+  &::before, &::after
+    content: ''
+    position: absolute
+    left: 0
+    bottom: 0
+    width: 12000px
+    height: 7000px
+    background-image: url('img/torrent.png')
+    background-repeat: repeat
+  &::before
+    +css-animation(1s linear 0s infinite normal both running torrent)
+  &::after
+    +css-animation(5s linear 0s infinite normal both running torrent2)
 
 +gradient-sprite(end, white, 640px, 420px, 800px)
   z-index: 20

@@ -40,3 +40,5 @@ export const stepWood = createSet('step-wood', 3, 0.75);
 export const stepSnow = createSet('step-snow', 5, 0.1);
 
 export const autumn = create('autumn', 1, true);
+export const rain = create('rain', 0.6, true);
+export const night = create('night', 1, true);

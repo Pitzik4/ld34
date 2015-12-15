@@ -13,13 +13,19 @@ export function tree(world, season) {
     out.anim = 'bare';
   } else if(season === 'autumn') {
     out.anim = 'autumn';
+  } else if(season === 'spring' || season === 'night') {
+    out.anim = 'silhouette';
   }
 }
-export function snow(world) {
-  return world.child(-3600, 0, 'snow');
+export function downpour(world, season) {
+  return world.child(-4000, 0, season === 'spring' ? 'torrent' : 'snow');
 }
 export function end(world) {
   return world.child(2400, 230, 'end');
+}
+
+export function theEnd(game) {
+  return game.child(0, 180, 'the-end');
 }
 
 export function character(world, x, y, sprite, footstep1, footstep2) {
@@ -87,7 +93,7 @@ export function boy(world, main, footstep1, footstep2) {
 
 export function main(world, sprite, footstep1, footstep2) {
   const out = character(world, -3000, World.platform(-3000), sprite, footstep1, footstep2);
-  out._direction = () => (keys.right||keys.d) - (keys.left||keys.a);
+  out._direction = () => (keys.right||keys.d) - ((keys.left||keys.a)&&!out.noLeft);
   out.flip = true;
   return out;
 }

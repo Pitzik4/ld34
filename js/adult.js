@@ -1,12 +1,13 @@
 import * as Objects from './objects.js';
 import * as World from './world.js';
 import { reverse, stop, lookAt, theEnd } from './game.js';
+import thirty from './thirty.js';
 
 
 export default function adult(game) {
   const { ent: world, overlay, boy, main, triggers, tree, fadeOut, onStop, onReverse, remove, end } = World.create(game, 'adult', 'winter');
   end.x = 2900;
-  main.x = -2420; boy.x = main.x = 2900; // FOR-RELEASE remove this
+  //main.x = -2420; boy.x = main.x = 2900; // FOR-RELEASE remove this
   main.y = World.platform(main.x);
   let x = -2400;
   triggers.push(
@@ -16,7 +17,7 @@ export default function adult(game) {
         main.cutscene();
         main.anim = null;
         let time = -4000;
-        /*FOR-RELEASE
+        /*FOR-RELEASE*/
         time = 0;
         window.setTimeout(() => {
           main.say("...", 3000);
@@ -239,7 +240,9 @@ export default function adult(game) {
             boy.x -= 10;
           }
           boy.flip = false;
+          boy.cutscene(lookAt(boy, main));
         }, time += 2000);
+        /*FOR-RELEASE*/
         window.setTimeout(() => {
           boy.say("See you in a few years.", 3000);
         }, time += 2000);
@@ -304,40 +307,70 @@ export default function adult(game) {
           boy.say("How will you do great things if you're stuck here?", 3000);
         }, time += 6000);
         window.setTimeout(() => {
+          main.reverse();
+        }, time += 8000);
+        window.setTimeout(() => {
+          main.say("You really think I can do great things?", 3000);
+        }, time += 2000);
+        window.setTimeout(() => {
+          boy.say("Of course! Anyone can.", 3000);
+        }, time += 6000);
+        window.setTimeout(() => {
+          boy.say("Just try. For me.", 3000);
+        }, time += 6000);
+        window.setTimeout(() => {
+          boy.say("Please.", 3000);
+        }, time += 8000);
+        window.setTimeout(() => {
+          main.say("...", 3000);
+        }, time += 8000);/* */
+        window.setTimeout(() => {
           main.control();
           onReverse(() => {
             let time = 0;
             main.cutscene();
             main.anim = null;
             window.setTimeout(() => {
-              main.say("You're right.", 3000);
+              main.say("I'm sorry.", 3000);
             }, time += 2000);
             window.setTimeout(() => {
-              fadeOut(theEnd(remove, game));
-            }, time + 5000);
+              main.say("I can't go back there.", 3000);
+            }, time += 8000);
             window.setTimeout(() => {
-              boy.say("Thank you.", 3000);
-            }, time += 6000);
+              main.say("Please forgive me.", 3000);
+            }, time += 10000);
+            window.setTimeout(() => {
+              main.say("I just want to be here with you.", 3000);
+            }, time += 8000);
+            window.setTimeout(() => {
+              main.say("Forever.", 3000);
+            }, time += 8000);
+            window.setTimeout(() => {
+              boy.say("It's okay.", 3000);
+            }, time += 8000);
+            window.setTimeout(() => {
+              fadeOut(theEnd(remove, game));
+            }, time + 2000);
+            window.setTimeout(() => {
+              boy.say("I understand.", 3000);
+            }, time += 10000);
           });
         }, time += 1000);
       }
     },
     { x: x += 200,
-      main: "I'm sorry."
+      main: "You're right."
     },
     { x: x += 200,
-      main: "I'm so sorry..."
+      main: "I have to try."
     },
-    { x: x += 200,
-      main: "I swear I'll make my life worthwhile."
-    },
-    { x: x += 200,
-      main: "I swear..."
+    { x: x += 400,
+      main: "I have to..."
     },
     { x: 3850,
       func() {
         remove();
-        adult(game);
+        thirty(game);
       }
     }
   );

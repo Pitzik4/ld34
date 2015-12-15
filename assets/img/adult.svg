@@ -11,8 +11,8 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="1600"
-   height="180"
-   viewBox="0 0 1600 180.00001"
+   height="190"
+   viewBox="0 0 1600 190.00001"
    version="1.1"
    id="svg5713"
    inkscape:version="0.91+devel r14527 custom"
@@ -46,9 +46,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.98994949"
-     inkscape:cx="1280.3952"
-     inkscape:cy="75.717935"
+     inkscape:zoom="2.8"
+     inkscape:cx="184.74189"
+     inkscape:cy="73.457522"
      inkscape:document-units="px"
      inkscape:current-layer="layer4"
      showgrid="false"
@@ -80,7 +80,7 @@
      inkscape:groupmode="layer"
      id="layer3"
      inkscape:label="ArmL"
-     transform="translate(0,5)">
+     transform="translate(0,15)">
     <path
        sodipodi:nodetypes="ccscsc"
        inkscape:connector-curvature="0"
@@ -206,7 +206,7 @@
      inkscape:groupmode="layer"
      id="layer5"
      inkscape:label="Legs"
-     transform="translate(0,5)">
+     transform="translate(0,15)">
     <path
        style="display:inline;fill:#3d487f;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.10014045px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="M 41.4639,174.65695 45.2176,97.660577 H 56.6185 Z"
@@ -404,7 +404,8 @@
      inkscape:groupmode="layer"
      id="layer8"
      inkscape:label="Scarf"
-     style="display:inline">
+     style="display:inline"
+     transform="translate(0,10)">
     <use
        style="display:inline"
        height="100%"
@@ -562,7 +563,7 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-667.24307,-915.32765)"
+     transform="translate(-667.24307,-905.32765)"
      style="display:inline">
     <path
        sodipodi:nodetypes="cccccccccc"
@@ -790,7 +791,7 @@
      id="layer2"
      inkscape:label="Pocket"
      style="display:inline"
-     transform="translate(0,5)">
+     transform="translate(0,15)">
     <g
        id="g4483">
       <path
@@ -1242,7 +1243,7 @@
      inkscape:groupmode="layer"
      id="layer4"
      inkscape:label="Head"
-     transform="translate(0,5)">
+     transform="translate(0,15)">
     <g
        id="g4578">
       <path
@@ -1421,5 +1422,5 @@
      inkscape:groupmode="layer"
      id="layer6"
      inkscape:label="ArmR"
-     transform="translate(0,5)" />
+     transform="translate(0,15)" />
 </svg>

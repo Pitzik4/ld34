@@ -1,7 +1,7 @@
 import keyboard from 'keyboardjs';
 
 import * as Entity from './entity.js';
-import begin from './adult.js';
+import begin from './kid.js';
 
 
 const gameDiv = document.getElementById('game');
